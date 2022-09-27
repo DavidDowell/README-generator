@@ -18,3 +18,6 @@ Create a README.md for a new project using Node.js and the command line.
 ![](img/Screen%20Shot%202022-09-27%20at%2012.57.58%20PM.png)
 
 ![](img/Screen%20Shot%202022-09-27%20at%2012.58.06%20PM.png)
+
+## Video
+
