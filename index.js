@@ -6,8 +6,7 @@ const generateMarkdown = require('./utils/generateMarkdown')
 
 
 // TODO: Create an array of questions for user input
-const questions = () => {
-    return inquirer.prompt([
+const questions = [
         {
             type: 'input',
             name: 'name',
@@ -35,7 +34,7 @@ const questions = () => {
             type: 'checkbox',
             name: 'installation',
             message: "What did you install to create this application? (Check all that apply)",
-            choices: ['Node.js', 'inquirer', 'VScode', 'Bootstrap', 'JQuery']
+            choices: ['Node.js', ' inquirer']
         },
         {
             type: 'input',
@@ -58,7 +57,7 @@ const questions = () => {
         {
             type: 'input',
             name: 'contribute',
-            message: 'Who contributed to this project, and how can others add to it?'
+            message: 'Who contributed to this project?'
         },
         {
             type: 'input',
@@ -75,15 +74,41 @@ const questions = () => {
             name: 'contact',
             message:'Please enter your email address, so that questions about this application can be sent your way.'
         }
-    ])};
+    ];
 
-    questions().then(answers => console.log(answers))
+const questionUser = () => {
+    return inquirer.prompt(questions)
+}
 
 // TODO: Create a function to write README file
-function writeToFile(fileName, data) {}
+function writeToFile(data) {
+    return new Promise((resolve, reject) => {
+        fs.writeFile("./output/README.md", data, (err) => {
+            if (err){
+                reject(err);
+                return;
+            }
+            resolve();
+        });
+    });
+}
 
 // TODO: Create a function to initialize app
-function init() {}
+function init() {
+    questionUser()
+        .then((answers) => {
+            return generateMarkdown(answers);
+        })
+        .then((READMEMarkdown) => {
+            return writeToFile(READMEMarkdown)
+        })
+        .then((fileresponse) => {
+            console.log(fileresponse);
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+}
 
 // Function call to initialize app
 init();
